@@ -9,9 +9,9 @@ data class TicTacToeGameRead(
 ) {
 
     override fun toString(): String {
-        state.reduce { acc, elem ->
-
-        }
+        return state.fold("") { acc, elem ->
+            acc + " " + elem.joinToString(" | ") + "\n"
+        }.trimEnd()
     }
 
     override fun equals(other: Any?): Boolean {

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-open class TicTacToeService(val repository: Repository<TicTacToeGame>) {
+open class TicTacToeService(private val repository: Repository<TicTacToeGame>) {
 
     @CommandHandler
     fun handleStartGame(startGame: StartGameCommand) {
-        repository.newInstance { TicTacToeGame(startGame.newGameUuid) }
+        repository.newInstance { TicTacToeGame(startGame.gameUuid) }
     }
 
     @CommandHandler

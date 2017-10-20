@@ -1,6 +1,6 @@
 package de.tarent.axon.application
 
-import io.kotlintest.TestCaseContext
+import de.tarent.axon.application.stats.TicTacToeGameRead
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 import java.util.*

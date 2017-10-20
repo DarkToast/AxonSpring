@@ -1,4 +1,4 @@
-package de.tarent.axon.application
+package de.tarent.axon.application.movements
 
 import de.tarent.axon.domain.Field
 import java.util.UUID

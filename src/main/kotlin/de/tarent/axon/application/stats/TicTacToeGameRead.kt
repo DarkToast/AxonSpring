@@ -1,4 +1,4 @@
-package de.tarent.axon.application
+package de.tarent.axon.application.stats
 
 import java.util.*
 

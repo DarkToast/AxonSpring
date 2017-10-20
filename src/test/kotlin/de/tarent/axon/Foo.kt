@@ -1,6 +1,6 @@
 package de.tarent.axon
 
-import de.tarent.axon.application.StartGameCommand
+import de.tarent.axon.application.movements.StartGameCommand
 import de.tarent.axon.domain.GameCreateEvent
 import de.tarent.axon.domain.TicTacToeGame
 import io.kotlintest.specs.StringSpec

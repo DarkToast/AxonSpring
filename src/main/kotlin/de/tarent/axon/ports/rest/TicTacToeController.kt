@@ -1,8 +1,8 @@
 package de.tarent.axon.ports.rest
 
-import de.tarent.axon.application.CirclePlaysCommand
-import de.tarent.axon.application.CrossPlaysCommand
-import de.tarent.axon.application.StartGameCommand
+import de.tarent.axon.application.movements.CirclePlaysCommand
+import de.tarent.axon.application.movements.CrossPlaysCommand
+import de.tarent.axon.application.movements.StartGameCommand
 import de.tarent.axon.domain.Field
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.http.HttpStatus

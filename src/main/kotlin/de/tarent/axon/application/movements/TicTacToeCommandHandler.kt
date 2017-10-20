@@ -1,13 +1,12 @@
-package de.tarent.axon.application
+package de.tarent.axon.application.movements
 
 import de.tarent.axon.domain.TicTacToeGame
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.model.Repository
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
-open class TicTacToeService(private val repository: Repository<TicTacToeGame>) {
+open class TicTacToeCommandHandler(private val repository: Repository<TicTacToeGame>) {
 
     @CommandHandler
     fun handleStartGame(startGame: StartGameCommand) {

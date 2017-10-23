@@ -1,0 +1,54 @@
+:description: CQRS in Theorie und praktisch mit dem Axon Framework
+:backend: revealjs
+:author: Christian Iwanzik
+:twitter: chrisIwanzik
+// Themes : default, beige, moon, blood, night, serif, simple, sky, solarized
+:revealjs_theme: default
+:linkattrs:
+:idprefix:
+
+= CQRS mit Axon
+
+Command Query Responsibility Segregation in Theorie +
+Und die Praxis mit dem Axon Framework
+
+== Bauen wir einen Customer Service!
+
+=== Was soll er alles können?
+[%step]
+* Registrierung eines Kunden
+* Abrufen von Kundendaten
+* Änderung von Kundendaten
+* Löschen von Kunden
+
+=== Good old - CRUD
+
+[source,javascript]
+----
+include::{sourcedir}/resources/customer.json[indent=0]
+----
+
+* +++<small>POST   /customers</small>+++
+* +++<small>PUT    /customers/{uuid}</small>+++
+* +++<small>GET    /customers/{uuid}</small>+++
+* +++<small>DELETE /customers</small>+++
+
+[NOTE.speaker]
+--
+Lediglich ein Modell und einige REST Methoden. Warum dann nicht direkt eine noSQL DB?
+--
+
+=== ... und dann kamen die Anforderungen
+
+Die UUID soll bei der Registrierung erzeugt werden
+
+[source,javascript]
+.+++<small>POST   /customers</small>+++
+----
+include::{sourcedir}/resources/customer_without_uuid.json[indent=0]
+----
+
+[NOTE.speaker]
+--
+Und zack haben wir schon zwei Modelle!
+--

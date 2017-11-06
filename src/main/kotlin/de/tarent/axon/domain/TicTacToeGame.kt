@@ -20,34 +20,36 @@ open class TicTacToeGame() {
 
     private var version: Long = 0L
 
-    private var nextParty: Char = 'X'
+    private var actualParty: Char = 'X'
 
 
 
     constructor(gameUuid: UUID) : this() {
         this.gameUuid = gameUuid
-        AggregateLifecycle.apply(GameCreateEvent(gameUuid))
+        AggregateLifecycle.apply(GameCreateEvent(gameUuid, version, state, actualParty))
     }
 
     fun crossPlays(field: Field) {
-        if(nextParty != 'X') {
+        if(actualParty != 'X') {
             throw IllegalStateException("It's not your turn X!")
         }
 
         if (state[field.row][field.column] == '-') {
             state[field.row][field.column] = 'X'
+            actualParty = 'X'
         } else {
             throw IllegalStateException("FooBar")
         }
     }
 
     fun circlePlays(field: Field) {
-        if(nextParty != 'O') {
+        if(actualParty != 'O') {
             throw IllegalStateException("It's not your turn O!")
         }
 
         if (state[field.row][field.column] == '-') {
             state[field.row][field.column] = 'O'
+            actualParty = 'O'
         } else {
             throw IllegalStateException("FooBar")
         }
@@ -68,7 +70,7 @@ open class TicTacToeGame() {
     }
 
     fun getActualParty(): Char {
-        return nextParty
+        return actualParty
     }
 
 

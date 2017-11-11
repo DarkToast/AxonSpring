@@ -58,8 +58,8 @@ zwingt uns zu einem "Zwischenstand" im Modell.
 --
 
 [transition=fast]
-== Ist CRUD noch das Mittel der Wahl?
-image::crud.jpg[background, size=cover]
+=== Ist CRUD noch das Mittel der Wahl?
+image::crud.svg[background, size=cover]
 
 [NOTE.speaker]
 --
@@ -68,44 +68,54 @@ Das war mal ein schönes Modell und ein guter Anfang.
 
 [transition=fast]
 === Ist CRUD noch das Mittel der Wahl?
-image::crudExploded_1.svg[background, size=cover]
+image::crudExploded.svg[background, size=cover]
 
 [NOTE.speaker]
 --
-Das war mal ein schönes Modell und ein guter Anfang.
+Aber sehr schnell schleicht sich die Komplexität in die Applikation.
 --
 
 [transition=fast]
-=== Ist CRUD noch das Mittel der Wahl?
-image::crudExploded_2.svg[background, size=cover]
+=== Aus der Praxis:
+image::thunderbirdsPayback.jpg[background, size=cover]
 
 [NOTE.speaker]
 --
-Das war mal ein schönes Modell und ein guter Anfang.
+Reales Beispiel mit ausufernder Komplexität.
 --
 
-[transition=fast]
-=== Ist CRUD noch das Mittel der Wahl?
-image::crudExploded_3.svg[background, size=cover]
+== Divide and Conquer oder... CRQS
+image::crudArchitecture.svg[background, size=cover]
 
 [NOTE.speaker]
 --
-Das war mal ein schönes Modell und ein guter Anfang.
+Bei CRUD und ähnlichen Architekturen laufen die ändernden und abrufenden
+Anfragen meist durch das selbe Modell, bzw. Schichten.
+Dieses Modell muss dann aber auch alle Anforderungen erfüllen was die
+Komplexität schnell in die Höhe treiben kann.
 --
 
-[transition=fast]
-=== Ist CRUD noch das Mittel der Wahl?
-image::crudExploded_3.svg[background, size=cover]
+=== CQRS als Alternative
+image::cqrsArchitecture.svg[background, size=cover]
 
 [NOTE.speaker]
 --
-Thunderbirds Beispiel
+Bei CQRS sind ändernde und abrufende Anfragen strikt getrennt.
+Bei Änderungen werden nicht die gesamten Daten überschrieben, sondern nur partielle
+`Commands` angewendet.
+Auf der Abfrageebene wird das Hauptmodell in Querymodelle überführt. Dadurch lassen sich
+spezifische Abfragen besser steuern. Das Querymodell könnte z.B. eine Submenge oder eine
+zusammengeführte Menge aus mehreren Modellen sein.
 --
 
-== Divide and Conquer
+=== Event Sourceing als Erweiterung
+image::eventSourcingSimple.svg[background, size=cover]
 
-=== CQRS
-=== Event Sourceing
+[NOTE.speaker]
+--
+Mit Event Sourcing gibt es eine gute Erweiterung, welche die Kopplung noch weiter
+aufweicht.
+--
 
 == Axon - Livedemo
 

@@ -8,10 +8,14 @@ body {
 
 .reveal h2 {
     font-size: 1.2em;
-    padding-bottom: 10%;
+    padding-bottom: 5%;
 }
 
 .reveal code {
     max-height: 600px;
     font-size: 75%;
+}
+
+.reveal pre {
+    width: 100%;
 }

@@ -10,8 +10,6 @@ interface CustomerService {
     fun delete(customerUuid: UUID)
 }
 
-data class Customer (
-    val id: UUID, val name: String, val surname: String, val email: String
-)
+data class Customer (val id: UUID, val name: String, val surname: String, val email: String)
 
 // end::presentation[]

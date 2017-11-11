@@ -15,13 +15,9 @@ data class Email(val email: String)
 // tag::presentation2[]
 interface CustomerService {
     fun create(customer: CustomerCreate): Customer
-
     fun update(customer: CustomerUpdate): Customer
-
     fun read(customerUuid: UUID): Customer
-
     fun delete(customerUuid: UUID)
-
     fun changeEmail(customerUuid: UUID, email: Email)
 }
 // end::presentation2[]

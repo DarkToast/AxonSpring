@@ -4,6 +4,8 @@ import de.tarent.axon.domain.GameCreateEvent
 import de.tarent.axon.domain.TicTacToeGame
 import de.tarent.axon.movements.app.StartGameCommand
 import de.tarent.axon.movements.app.TicTacToeCommandHandler
+import io.kotlintest.specs.StringSpec
+import org.axonframework.test.aggregate.AggregateTestFixture
 import java.util.*
 
 class FooTest : StringSpec() {

@@ -76,9 +76,6 @@
             <scope>test</scope>
         </dependency>
 
-
-
-
         <dependency>
             <groupId>io.kotlintest</groupId>
             <artifactId>kotlintest</artifactId>
@@ -180,7 +177,7 @@
                             <outputDirectory>${project.slides.directory}</outputDirectory>
                             <backend>revealjs</backend>
                             <templateDir>${project.build.directory}/asciidoctor-reveal.js-${asciidoctor-revealjs.version}/templates/slim</templateDir>
-                            <sourceHighlighter>pygments</sourceHighlighter>
+                            <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
                                 <!--
                                     As we are downloading reveal.js in runtime, it sits in a nonstandard folder `reveal.js-${revealjs.version}`

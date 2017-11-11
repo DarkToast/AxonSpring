@@ -1,6 +1,8 @@
 package de.tarent.axon.application
 
 import de.tarent.axon.query.db.TicTacToeGameRead
+import io.kotlintest.matchers.shouldBe
+import io.kotlintest.specs.StringSpec
 import java.util.*
 
 class TicTacToeGameReadTest : StringSpec() {

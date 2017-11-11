@@ -11,9 +11,6 @@ Command Query Responsibility Segregation
 
 == Bauen wir einen Customer Service!
 
-[%notitle]
-=== Good old - CRUD
-
 [source,kotlin]
 ----
 include::{sourcedir}/kotlin/de/tarent/crud/one/CustomerCrud.kt[tags=presentation]
@@ -35,7 +32,8 @@ include::{sourcedir}/kotlin/de/tarent/crud/two/CustomerUuidGenerator.kt[tags=pre
 
 [NOTE.speaker]
 --
-Und zack haben wir schon zwei Modelle!
+Oh je. Unser schönes CRUD wird aufgelöst. Statt einem zentralen Modell haben wir plötzlich
+schon zwei verschiedene.
 --
 
 [%notitle]
@@ -55,7 +53,53 @@ include::{sourcedir}/kotlin/de/tarent/crud/three/CustomerEmailOptin.kt[tags=pres
 
 [NOTE.speaker]
 --
-Und zack haben wir schon drei Modelle!
+Und schon ist es mit CRUD am Ende. Allein das die Email über ein Double-Optin geschehen muss,
+zwingt uns zu einem "Zwischenstand" im Modell.
+--
+
+[transition=fast]
+== Ist CRUD noch das Mittel der Wahl?
+image::crud.jpg[background, size=cover]
+
+[NOTE.speaker]
+--
+Das war mal ein schönes Modell und ein guter Anfang.
+--
+
+[transition=fast]
+=== Ist CRUD noch das Mittel der Wahl?
+image::crudExploded_1.svg[background, size=cover]
+
+[NOTE.speaker]
+--
+Das war mal ein schönes Modell und ein guter Anfang.
+--
+
+[transition=fast]
+=== Ist CRUD noch das Mittel der Wahl?
+image::crudExploded_2.svg[background, size=cover]
+
+[NOTE.speaker]
+--
+Das war mal ein schönes Modell und ein guter Anfang.
+--
+
+[transition=fast]
+=== Ist CRUD noch das Mittel der Wahl?
+image::crudExploded_3.svg[background, size=cover]
+
+[NOTE.speaker]
+--
+Das war mal ein schönes Modell und ein guter Anfang.
+--
+
+[transition=fast]
+=== Ist CRUD noch das Mittel der Wahl?
+image::crudExploded_3.svg[background, size=cover]
+
+[NOTE.speaker]
+--
+Thunderbirds Beispiel
 --
 
 == Divide and Conquer

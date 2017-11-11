@@ -20,6 +20,7 @@
         <kotlin.version>1.1.4-3</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <axon.version>3.0.6</axon.version>
+
         <jruby.version>1.7.27</jruby.version>
         <asciidoctorj.version>1.5.6</asciidoctorj.version>
         <revealjs.version>3.5.0</revealjs.version>
@@ -60,12 +61,23 @@
             <version>${axon.version}</version>
         </dependency>
 
+
+        <!-- TESTS -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
             <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+
 
         <dependency>
             <groupId>io.kotlintest</groupId>
@@ -168,7 +180,7 @@
                             <outputDirectory>${project.slides.directory}</outputDirectory>
                             <backend>revealjs</backend>
                             <templateDir>${project.build.directory}/asciidoctor-reveal.js-${asciidoctor-revealjs.version}/templates/slim</templateDir>
-                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <sourceHighlighter>pygments</sourceHighlighter>
                             <attributes>
                                 <!--
                                     As we are downloading reveal.js in runtime, it sits in a nonstandard folder `reveal.js-${revealjs.version}`

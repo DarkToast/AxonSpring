@@ -1,8 +1,6 @@
 package de.tarent.axon.application
 
-import de.tarent.axon.application.stats.TicTacToeGameRead
-import io.kotlintest.matchers.shouldBe
-import io.kotlintest.specs.StringSpec
+import de.tarent.axon.query.db.TicTacToeGameRead
 import java.util.*
 
 class TicTacToeGameReadTest : StringSpec() {
@@ -20,7 +18,7 @@ class TicTacToeGameReadTest : StringSpec() {
                               > O | - | -
                            """.trimMargin(">")
 
-            TicTacToeGameRead(UUID.randomUUID(), 1L, actualState).toString() shouldBe expected
+            TicTacToeGameRead(UUID.randomUUID(), 1L, actualState, 'X').toString() shouldBe expected
         }
 
     }

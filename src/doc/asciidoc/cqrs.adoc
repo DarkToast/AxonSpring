@@ -2,53 +2,70 @@
 :backend: revealjs
 :author: Christian Iwanzik
 :twitter: chrisIwanzik
-// Themes : default, beige, moon, blood, night, serif, simple, sky, solarized
 :revealjs_theme: default
-:linkattrs:
-:idprefix:
+:customcss: ./cqrs.css
 
-= CQRS mit Axon
+= CQRS
 
-Command Query Responsibility Segregation in Theorie +
-Und die Praxis mit dem Axon Framework
+Command Query Responsibility Segregation
 
 == Bauen wir einen Customer Service!
 
-=== Was soll er alles können?
-[%step]
-* Registrierung eines Kunden
-* Abrufen von Kundendaten
-* Änderung von Kundendaten
-* Löschen von Kunden
-
+[%notitle]
 === Good old - CRUD
 
-[source,javascript]
+[source,kotlin]
 ----
-include::{sourcedir}/resources/customer.json[indent=0]
+include::{sourcedir}/kotlin/de/tarent/crud/one/CustomerCrud.kt[tags=presentation]
 ----
-
-* +++<small>POST   /customers</small>+++
-* +++<small>PUT    /customers/{uuid}</small>+++
-* +++<small>GET    /customers/{uuid}</small>+++
-* +++<small>DELETE /customers</small>+++
 
 [NOTE.speaker]
 --
-Lediglich ein Modell und einige REST Methoden. Warum dann nicht direkt eine noSQL DB?
+Good old CRUD. Lediglich ein Modell und einige Methoden. Warum dann nicht direkt eine noSQL DB?
 --
 
 === ... und dann kamen die Anforderungen
 
-Die UUID soll bei der Registrierung erzeugt werden
+Hm. Die UUID soll bei der Registrierung erzeugt werden.
 
-[source,javascript]
-.+++<small>POST   /customers</small>+++
+[source,kotlin]
 ----
-include::{sourcedir}/resources/customer_without_uuid.json[indent=0]
+include::{sourcedir}/kotlin/de/tarent/crud/two/CustomerUuidGenerator.kt[tags=presentation]
 ----
 
 [NOTE.speaker]
 --
 Und zack haben wir schon zwei Modelle!
 --
+
+[%notitle]
+=== ... noch mehr Anforderungen
+
+Oh, die Email darf nicht mehr einfach so einfach geändert werden...
+
+[source,kotlin]
+----
+include::{sourcedir}/kotlin/de/tarent/crud/three/CustomerEmailOptin.kt[tags=presentation2]
+----
+
+[source,kotlin]
+----
+include::{sourcedir}/kotlin/de/tarent/crud/three/CustomerEmailOptin.kt[tags=presentation1]
+----
+
+[NOTE.speaker]
+--
+Und zack haben wir schon drei Modelle!
+--
+
+== Divide and Conquer
+
+=== CQRS
+=== Event Sourceing
+
+== Axon - Livedemo
+
+== Quellen
+* https://martinfowler.com/bliki/CQRS.html
+* http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/
+* https://martinfowler.com/eaaDev/EventSourcing.html

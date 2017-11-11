@@ -1,0 +1,17 @@
+body {
+    background-color: #f4f4f4;
+}
+
+.reveal, .reveal h1, .reveal h2 {
+    color: darkslategray;
+}
+
+.reveal h2 {
+    font-size: 1.2em;
+    padding-bottom: 10%;
+}
+
+.reveal code {
+    max-height: 600px;
+    font-size: 75%;
+}

@@ -57,34 +57,37 @@ Und schon ist es mit CRUD am Ende. Allein das die Email über ein Double-Optin g
 zwingt uns zu einem "Zwischenstand" im Modell.
 --
 
-[transition=fast]
 === Ist CRUD noch das Mittel der Wahl?
-image::crud.svg[background, size=cover]
+Wir kamen von hier:
+
+image::crud.svg[size=cover]
 
 [NOTE.speaker]
 --
 Das war mal ein schönes Modell und ein guter Anfang.
 --
 
-[transition=fast]
 === Ist CRUD noch das Mittel der Wahl?
-image::crudExploded.svg[background, size=cover]
+Und sind mittlerweile hier:
+
+image::crudExploded.svg[size=cover]
 
 [NOTE.speaker]
 --
 Aber sehr schnell schleicht sich die Komplexität in die Applikation.
 --
 
-[transition=fast]
-=== Aus der Praxis:
-image::thunderbirdsPayback.jpg[background, size=cover]
+=== Big ball of mud:
+Und so kann es irgendwann aussehen:
+
+image::thunderbirdsPayback.jpg[600,600]]
 
 [NOTE.speaker]
 --
 Reales Beispiel mit ausufernder Komplexität.
 --
 
-== Divide and Conquer oder... CRQS
+== Divide and Conquer oder... CQRS
 image::crudArchitecture.svg[background, size=cover]
 
 [NOTE.speaker]
@@ -108,7 +111,18 @@ spezifische Abfragen besser steuern. Das Querymodell könnte z.B. eine Submenge 
 zusammengeführte Menge aus mehreren Modellen sein.
 --
 
-=== Event Sourceing als Erweiterung
+=== Was sind Commands?
+
+image::commandTransition.jpg[]
+
+[source,kotlin]
+----
+include::{sourcedir}/kotlin/de/tarent/cqrs/Commands.kt[tags=presentation]
+----
+
+=== Was sind Queries?
+
+== Events als Erweiterung
 image::eventSourcingSimple.svg[background, size=cover]
 
 [NOTE.speaker]
@@ -117,7 +131,25 @@ Mit Event Sourcing gibt es eine gute Erweiterung, welche die Kopplung noch weite
 aufweicht.
 --
 
-== Axon - Livedemo
+=== Events
+
+=== Command -> Model -> Event
+[NOTE.speaker]
+--
+Commands ändern das Modell/Domäne und diese erzeugen wiederum Events.
+--
+
+
+=== Event -> Model -> Query
+[NOTE.speaker]
+--
+EventHandler verarbeiten Events und ändern ihr eigenes Querymodell.
+Events können dabei aus verschiedenen Quellen, bzw. CommandModellen stammen.
+--
+
+== Das Axon Framework
+
+=== Architektur
 
 == Quellen
 * https://martinfowler.com/bliki/CQRS.html

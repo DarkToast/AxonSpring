@@ -19,3 +19,11 @@ body {
 .reveal pre {
     width: 100%;
 }
+
+.reveal td {
+    font-size: 50%;
+}
+
+.reveal td.tableblock {
+    padding: 0.1em 0.2em;
+}

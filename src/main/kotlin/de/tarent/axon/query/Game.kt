@@ -1,23 +1,30 @@
 package de.tarent.axon.query
 
-import de.tarent.axon.domain.Field
 import java.util.*
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.ElementCollection
+import javax.persistence.OneToMany
 
 @Entity
-data class TicTacToeGameRead(
-    @Id val gameUuid: UUID,
+data class Game(
+    @Id
+    val gameUuid: UUID,
+
     val version: Long,
-    @ElementCollection val xMoves: List<Field>,
-    @ElementCollection val oMoves: List<Field>,
+
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    val xMoves: List<Movement>,
+
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    val oMoves: List<Movement>,
+
     val party: Char
 ) {
 
     // Just for JPA
     @Suppress("unused")
-    private constructor(): this(UUID.randomUUID(), 0L, emptyList<Field>(), emptyList<Field>(), 'X')
+    private constructor(): this(UUID.randomUUID(), 0L, emptyList<Movement>(), emptyList<Movement>(), 'X')
 
     override fun toString(): String {
         val state = arrayOf(

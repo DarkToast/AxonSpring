@@ -7,3 +7,5 @@ data class GameStarted(val gameUuid: UUID, val version: Long, val startParty: Ch
 data class CrossPlayed(val gameUuid: UUID, val version: Long, val field: Field)
 
 data class CirclePlayed(val gameUuid: UUID, val version: Long, val field: Field)
+
+data class GameFinished(val gameUuid: UUID, val version: Long, val victoryParty: Char)

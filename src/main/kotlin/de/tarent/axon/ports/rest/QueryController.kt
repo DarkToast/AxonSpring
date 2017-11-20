@@ -1,7 +1,7 @@
-package de.tarent.axon.query.rest
+package de.tarent.axon.ports.rest
 
-import de.tarent.axon.query.db.GameRepository
-import de.tarent.axon.query.db.TicTacToeGameRead
+import de.tarent.axon.query.GameRepository
+import de.tarent.axon.query.TicTacToeGameRead
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable

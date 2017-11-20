@@ -1,9 +1,9 @@
-package de.tarent.axon.movements.rest
+package de.tarent.axon.ports.rest
 
 import de.tarent.axon.domain.Field
-import de.tarent.axon.movements.app.CirclePlaysCommand
-import de.tarent.axon.movements.app.CrossPlaysCommand
-import de.tarent.axon.movements.app.StartGameCommand
+import de.tarent.axon.commands.CirclePlays
+import de.tarent.axon.commands.CrossPlays
+import de.tarent.axon.commands.StartGame
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -30,7 +30,7 @@ open class TicTacToeController(private val commandGateway: CommandGateway) {
         val newGameUuid = UUID.randomUUID()
 
         // Creating a new command object
-        val command = StartGameCommand(newGameUuid)
+        val command = StartGame(newGameUuid)
 
         // Sending the command into the CQRS system.
         val future: CompletableFuture<Any> = commandGateway.send<Any>(command)
@@ -46,7 +46,7 @@ open class TicTacToeController(private val commandGateway: CommandGateway) {
         val result = DeferredResult<GameResponse>()
 
         // Creating a new command object
-        val command = CrossPlaysCommand(UUID.fromString(gameUuid), Field(moveRequest.row, moveRequest.column))
+        val command = CrossPlays(UUID.fromString(gameUuid), Field(moveRequest.row, moveRequest.column))
 
         // Sending the command into the CQRS system.
         val future: CompletableFuture<Any> = commandGateway.send<Any>(command)
@@ -62,7 +62,7 @@ open class TicTacToeController(private val commandGateway: CommandGateway) {
         val result = DeferredResult<GameResponse>()
 
         // Creating a new command object
-        val command = CirclePlaysCommand(UUID.fromString(gameUuid), Field(moveRequest.row, moveRequest.column))
+        val command = CirclePlays(UUID.fromString(gameUuid), Field(moveRequest.row, moveRequest.column))
 
         // Sending the command into the CQRS system.
         val future: CompletableFuture<Any> = commandGateway.send<Any>(command)

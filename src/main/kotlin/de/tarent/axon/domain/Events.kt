@@ -2,4 +2,8 @@ package de.tarent.axon.domain
 
 import java.util.*
 
-data class GameCreateEvent(val gameUuid: UUID, val version: Long, val createdState: Array<Array<Char>>, val actualParty: Char)
+data class GameStarted(val gameUuid: UUID, val version: Long, val startParty: Char)
+
+data class CrossPlayed(val gameUuid: UUID, val version: Long, val field: Field)
+
+data class CirclePlayed(val gameUuid: UUID, val version: Long, val field: Field)

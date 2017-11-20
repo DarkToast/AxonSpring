@@ -1,4 +1,4 @@
-package de.tarent.axon.query.db
+package de.tarent.axon.query
 
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*

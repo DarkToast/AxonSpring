@@ -7,24 +7,26 @@ import javax.persistence.Id
 import javax.persistence.OneToMany
 
 @Entity
-data class Game(
+data class Game (
     @Id
     val gameUuid: UUID,
 
     val version: Long,
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    val xMoves: List<Movement>,
+    val movesFromX: List<Movement>,
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    val oMoves: List<Movement>,
+    val movesFromO: List<Movement>,
 
-    val party: Char
+    val lastMoveFrom: Char,
+
+    val finished: Boolean
 ) {
 
     // Just for JPA
     @Suppress("unused")
-    private constructor(): this(UUID.randomUUID(), 0L, emptyList<Movement>(), emptyList<Movement>(), 'X')
+    private constructor() : this(UUID.randomUUID(), 0L, emptyList<Movement>(), emptyList<Movement>(), 'X', false)
 
     override fun toString(): String {
         val state = arrayOf(
@@ -33,10 +35,10 @@ data class Game(
             arrayOf('-', '-', '-')
         )
 
-        xMoves.forEach({move ->
+        movesFromX.forEach({ move ->
             state[move.row][move.column] = 'X'
         })
-        oMoves.forEach({move ->
+        movesFromO.forEach({ move ->
             state[move.row][move.column] = 'O'
         })
 
@@ -44,6 +46,4 @@ data class Game(
             acc + " " + elem.joinToString(" | ") + "\n"
         }.trimEnd()
     }
-
-
 }

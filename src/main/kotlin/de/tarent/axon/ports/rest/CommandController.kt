@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture
 typealias GameResponse = ResponseEntity<UUID>
 
 @Controller
-open class TicTacToeController(private val commandGateway: CommandGateway) {
+open class CommandController(private val commandGateway: CommandGateway) {
 
     @RequestMapping(value = "/game", method = arrayOf(POST))
     fun startGame(): DeferredResult<*> {

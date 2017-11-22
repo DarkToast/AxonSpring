@@ -2,6 +2,7 @@ package de.tarent.axon.query
 
 import de.tarent.axon.domain.CirclePlayed
 import de.tarent.axon.domain.CrossPlayed
+import de.tarent.axon.domain.GameFinished
 import de.tarent.axon.domain.GameStarted
 import org.axonframework.eventhandling.EventHandler
 import org.springframework.stereotype.Component
@@ -14,7 +15,7 @@ open class GameEventHandler(private val repository: GameRepository) {
     @Suppress("unused")
     fun handleGameStarted(event: GameStarted) {
         repository.save(
-            Game(event.gameUuid, event.version, emptyList(), emptyList(), event.startParty)
+            Game(event.gameUuid, event.version, emptyList(), emptyList(), '-', false)
         )
     }
 
@@ -24,10 +25,7 @@ open class GameEventHandler(private val repository: GameRepository) {
         val game = repository.findOne(event.gameUuid)
 
         val movement = Movement(UUID.randomUUID(), event.gameUuid, event.field.row, event.field.column, event.version)
-
-
-        val newGame = game.copy(version = event.version, xMoves = game.xMoves.plus(movement), party = 'X')
-
+        val newGame = game.copy(version = event.version, movesFromX = game.movesFromX.plus(movement), lastMoveFrom = 'X')
         repository.save(newGame)
     }
 
@@ -37,7 +35,14 @@ open class GameEventHandler(private val repository: GameRepository) {
         val game = repository.findOne(event.gameUuid)
 
         val movement = Movement(UUID.randomUUID(), event.gameUuid, event.field.row, event.field.column, event.version)
-        val newGame = game.copy(version = event.version, oMoves = game.oMoves.plus(movement), party = 'O')
+        val newGame = game.copy(version = event.version, movesFromO = game.movesFromO.plus(movement), lastMoveFrom = 'O')
         repository.save(newGame)
+    }
+
+    @EventHandler
+    @Suppress("unused")
+    fun handleGameFinished(event: GameFinished) {
+        val game = repository.findOne(event.gameUuid)
+        repository.save(game.copy(finished = true))
     }
 }

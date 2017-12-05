@@ -1,9 +1,9 @@
 package de.tarent.axon.ports.rest
 
-import de.tarent.axon.domain.Field
 import de.tarent.axon.commands.CirclePlays
 import de.tarent.axon.commands.CrossPlays
 import de.tarent.axon.commands.StartGame
+import de.tarent.axon.domain.Field
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -21,12 +21,12 @@ import java.util.concurrent.CompletableFuture
 typealias GameResponse = ResponseEntity<UUID>
 
 @Controller
-open class TicTacToeController(private val commandGateway: CommandGateway) {
+open class CommandController(private val commandGateway: CommandGateway) {
 
     @RequestMapping(value = "/game", method = arrayOf(POST))
-    fun startGame(): DeferredResult<GameResponse> {
+    fun startGame(): DeferredResult<*> {
 
-        val result = DeferredResult<GameResponse>()
+        val result = DeferredResult<Any>()
         val newGameUuid = UUID.randomUUID()
 
         // Creating a new command object
@@ -36,14 +36,16 @@ open class TicTacToeController(private val commandGateway: CommandGateway) {
         val future: CompletableFuture<Any> = commandGateway.send<Any>(command)
 
         // Return the uuid, when the command handling is finished.
-        future.thenAccept({ addUriToResult(result, newGameUuid, HttpStatus.CREATED) })
+        future
+            .exceptionally({ e -> result.setResult(ResponseEntity.badRequest().body(e.message)) })
+            .thenAccept({ addUriToResult(result, newGameUuid, HttpStatus.SEE_OTHER) })
 
         return result
     }
 
     @RequestMapping(value = "/game/{gameUuid}/cross", method = arrayOf(PUT))
-    fun crossPlays(@PathVariable gameUuid: String, @RequestBody moveRequest: MoveRequest): DeferredResult<GameResponse> {
-        val result = DeferredResult<GameResponse>()
+    fun crossPlays(@PathVariable gameUuid: String, @RequestBody moveRequest: MoveRequest): DeferredResult<*> {
+        val result = DeferredResult<Any>()
 
         // Creating a new command object
         val command = CrossPlays(UUID.fromString(gameUuid), Field(moveRequest.row, moveRequest.column))
@@ -52,14 +54,16 @@ open class TicTacToeController(private val commandGateway: CommandGateway) {
         val future: CompletableFuture<Any> = commandGateway.send<Any>(command)
 
         // Return the uuid, when the command handling is finished.
-        future.thenAccept({ addUriToResult(result, command.gameUuid, HttpStatus.SEE_OTHER) })
+        future
+            .exceptionally({ e -> result.setResult(ResponseEntity.badRequest().body(e.message)) })
+            .thenAccept({ addUriToResult(result, command.gameUuid, HttpStatus.SEE_OTHER) })
 
         return result
     }
 
-    @RequestMapping(value = "/game/{gameUuid}/cicle", method = arrayOf(PUT))
-    fun circlePlays(@PathVariable gameUuid: String, @RequestBody moveRequest: MoveRequest): DeferredResult<GameResponse> {
-        val result = DeferredResult<GameResponse>()
+    @RequestMapping(value = "/game/{gameUuid}/circle", method = arrayOf(PUT))
+    fun circlePlays(@PathVariable gameUuid: String, @RequestBody moveRequest: MoveRequest): DeferredResult<*> {
+        val result = DeferredResult<Any>()
 
         // Creating a new command object
         val command = CirclePlays(UUID.fromString(gameUuid), Field(moveRequest.row, moveRequest.column))
@@ -68,13 +72,15 @@ open class TicTacToeController(private val commandGateway: CommandGateway) {
         val future: CompletableFuture<Any> = commandGateway.send<Any>(command)
 
         // Return the uuid, when the command handling is finished.
-        future.thenAccept({ addUriToResult(result, command.gameUuid, HttpStatus.SEE_OTHER) })
+        future
+            .exceptionally({ e -> result.setResult(ResponseEntity.badRequest().body(e.message)) })
+            .thenAccept({ addUriToResult(result, command.gameUuid, HttpStatus.SEE_OTHER) })
 
         return result
     }
 
-    private fun addUriToResult(result: DeferredResult<GameResponse>, gameUuid: UUID, httpStatus: HttpStatus) {
+    private fun addUriToResult(result: DeferredResult<Any>, gameUuid: UUID, httpStatus: HttpStatus) {
         val uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/game/$gameUuid").build().toUri()
-        result.setResult(ResponseEntity.status(httpStatus).location(uri).build())
+        result.setResult(ResponseEntity.status(httpStatus).location(uri).build<GameResponse>())
     }
 }

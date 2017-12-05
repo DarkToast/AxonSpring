@@ -4,11 +4,11 @@ import de.tarent.axon.domain.Party.O
 import de.tarent.axon.domain.Party.X
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle
-import org.axonframework.commandhandling.model.AggregateRoot
 import org.axonframework.eventhandling.EventHandler
+import org.axonframework.spring.stereotype.Aggregate
 import java.util.*
 
-@AggregateRoot
+@Aggregate
 open class TicTacToeGame() {
 
     @AggregateIdentifier
@@ -23,6 +23,10 @@ open class TicTacToeGame() {
     private var version: Long = 0L
 
     private var nextParty: Party = X
+
+    private var gameFinished: Boolean = false
+
+    private var victoryParty: Char = '-'
 
 
 
@@ -42,12 +46,55 @@ open class TicTacToeGame() {
     }
 
     private fun checkStateForNewMove(party: Party, field: Field) {
+        if(gameFinished) {
+            throw IllegalStateException("The game is finished!")
+        }
+
         if(nextParty != party) {
             throw IllegalStateException("It's not your turn $party!")
         }
 
         if (state[field.row][field.column] != '-') {
             throw IllegalStateException("Field already set.")
+        }
+    }
+
+    private fun checkForVictory() {
+        fun check(): Char {
+
+            // check rows
+            state.forEach { row ->
+                if (row.all { field -> field != '-' }) {
+                    return row[0]
+                }
+            }
+
+            // Check columns
+            if (state.all { row -> row[0] != '-' }) {
+                return state[0][0]
+            }
+            if (state.all { row -> row[1] != '-' }) {
+                return state[0][1]
+            }
+            if (state.all { row -> row[2] != '-' }) {
+                return state[0][2]
+            }
+
+            // Check diags
+            if (state[0][0] != '-' && state[1][1] != '-' && state[2][2] != '-') {
+                return state[0][0]
+            }
+
+            if (state[0][2] != '-' && state[1][1] != '-' && state[2][0] != '-') {
+                return state[0][2]
+            }
+
+            return '-'
+        }
+
+        val victoryParty = check()
+        if(victoryParty != '-') {
+            AggregateLifecycle.apply(GameFinished(gameUuid, ++version, victoryParty))
         }
     }
 
@@ -64,6 +111,8 @@ open class TicTacToeGame() {
         this.state[field.row][field.column] = X.symbol
         this.nextParty = O
         this.version = event.version
+
+        checkForVictory()
     }
 
     @EventHandler
@@ -73,6 +122,14 @@ open class TicTacToeGame() {
         this.state[field.row][field.column] = O.symbol
         this.nextParty = X
         this.version = event.version
+
+        checkForVictory()
+    }
+
+    @EventHandler
+    fun gameFinishedHandler(event: GameFinished) {
+        this.gameFinished = true
+        this.victoryParty = event.victoryParty
     }
 
     fun getGameUuid(): UUID {

@@ -1,23 +1,32 @@
 package de.tarent.axon.query
 
-import de.tarent.axon.domain.Field
 import java.util.*
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.ElementCollection
+import javax.persistence.OneToMany
 
 @Entity
-data class TicTacToeGameRead(
-    @Id val gameUuid: UUID,
+data class Game (
+    @Id
+    val gameUuid: UUID,
+
     val version: Long,
-    @ElementCollection val xMoves: List<Field>,
-    @ElementCollection val oMoves: List<Field>,
-    val party: Char
+
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    val movesFromX: List<Movement>,
+
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    val movesFromO: List<Movement>,
+
+    val lastMoveFrom: Char,
+
+    val finished: Boolean
 ) {
 
     // Just for JPA
     @Suppress("unused")
-    private constructor(): this(UUID.randomUUID(), 0L, emptyList<Field>(), emptyList<Field>(), 'X')
+    private constructor() : this(UUID.randomUUID(), 0L, emptyList<Movement>(), emptyList<Movement>(), 'X', false)
 
     override fun toString(): String {
         val state = arrayOf(
@@ -26,10 +35,10 @@ data class TicTacToeGameRead(
             arrayOf('-', '-', '-')
         )
 
-        xMoves.forEach({move ->
+        movesFromX.forEach({ move ->
             state[move.row][move.column] = 'X'
         })
-        oMoves.forEach({move ->
+        movesFromO.forEach({ move ->
             state[move.row][move.column] = 'O'
         })
 
@@ -37,6 +46,4 @@ data class TicTacToeGameRead(
             acc + " " + elem.joinToString(" | ") + "\n"
         }.trimEnd()
     }
-
-
 }
